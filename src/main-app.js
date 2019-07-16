@@ -228,7 +228,11 @@ class MainApp extends PolymerElement {
     });
 
     this.socket.on('task updated', (data) => {
-      this.getAll()
+      this.getAll();
+    });
+
+    this.socket.on('task deleted', (data) => {
+      this.getAll();
     });
   
   }
@@ -250,7 +254,6 @@ class MainApp extends PolymerElement {
     this.id = event.detail.id;
     this.set('body', {});
     this.$.dataAjax.method = "DELETE";
-    console.log('main-app received delete task event');
   }  
 
   getAll() {

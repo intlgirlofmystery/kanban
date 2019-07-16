@@ -44,6 +44,12 @@ conn.authenticate({ username: process.env.SF_USERNAME,
     socket.emit('task updated', data);
   });
 
+  const taskDeleted = client.subscribe({ topic: 'Task_Deleted__e', isEvent: true, replayId: -1 });
+
+  taskDeleted.on('data', function (data) {
+    console.log(data);
+    socket.emit('task deleted', data);
+  });  
 });
 
 

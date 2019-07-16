@@ -98,6 +98,7 @@ class TaskCard extends PolymerElement {
         <div class$="name {{color}}">[[user]]</div>
         <h3 class="title">[[title]]</h3>
         <p class="date">[[date]]</p>
+        <button class='btn' on-click="deleteTask">Delete Task</button>
         <section class="taskDescription">
           <slot></slot>
             <paper-dropdown-menu on-iron-select="changeStatus" label="Status" value="[[status]]">
@@ -108,6 +109,7 @@ class TaskCard extends PolymerElement {
               </paper-listbox>
             </paper-dropdown-menu>
         </section>
+
       </div>
     `;
   }
@@ -129,6 +131,15 @@ class TaskCard extends PolymerElement {
       status__c: temp
     }
     const newEvent = new CustomEvent('status change', { detail: detail,  bubbles: true, composed: true });
+    this.dispatchEvent(newEvent);
+  }
+
+  deleteTask(event) {
+    const id = this.id;
+    const detail = {
+      id: id
+    }
+    const newEvent = new CustomEvent('delete task', { detail: detail,  bubbles: true, composed: true });
     this.dispatchEvent(newEvent);
   }
 

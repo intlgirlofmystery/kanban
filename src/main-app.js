@@ -219,6 +219,7 @@ class MainApp extends PolymerElement {
     super.ready();
     this.$.taskInputs.addEventListener('new task', event => this.addTask(event));
     this.$.kanban.addEventListener('status change', event => this.statusChange(event));
+    this.$.kanban.addEventListener('delete task', event => this.deleteTask(event));
   
     this.socket = io();
 
@@ -229,7 +230,7 @@ class MainApp extends PolymerElement {
     this.socket.on('task updated', (data) => {
       this.getAll()
     });
-
+  
   }
 
   addTask(event) {
@@ -246,9 +247,10 @@ class MainApp extends PolymerElement {
   }
 
   deleteTask(event) {
-    this.id = "";
-    this.set('body', event.detail);
+    this.id = event.detail.id;
+    this.set('body', {});
     this.$.dataAjax.method = "DELETE";
+    console.log('main-app received delete task event');
   }  
 
   getAll() {
@@ -262,6 +264,7 @@ class MainApp extends PolymerElement {
       this.set('tasks', res.response);
     } else {
       this.getAll();
+
     }
     this.set('taskLength', this.tasks.length);
     this.set('tasksCompleted', this.tasks.filter(task => task.status__c === 'Complete').length);

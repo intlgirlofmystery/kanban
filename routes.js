@@ -51,6 +51,7 @@ module.exports = function (app) {
 
   app.delete('/api/tasks/:id', function(req, res) {
     const record = nforce.createSObject('Kanban__c');
+    record.set('Id', req.params.id);
     conn.delete({sobject: record}, (err, data) => {
       if (!err) {
         res.json({success: true});

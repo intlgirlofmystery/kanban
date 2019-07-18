@@ -205,8 +205,15 @@ class MainApp extends PolymerElement {
           </div>
       </header>
 
+      <paper-dropdown-menu on-iron-select="changeSort" label="Sort by" value="[[sort]]">
+      <paper-listbox slot="dropdown-content" class="dropdown-content">
+        <paper-item>Due Date Ascending</paper-item>
+        <paper-item>Due Date Descending</paper-item>
+        </paper-listbox>
+    </paper-dropdown-menu>
+
       <main class='board'>
-          <kanban-container tasks$="{{tasks}}" id="kanban"></kanban-container>
+          <kanban-container tasks$="{{tasks}}" sort$="{{sort}}" id="kanban"></kanban-container>
       </main>
     `;
   }
@@ -255,6 +262,11 @@ class MainApp extends PolymerElement {
     this.$.dataAjax.method = "PUT";
   }
 
+  changeSort(event) {
+    const temp = event.target.selectedItem.innerText;
+    this.set('sort', temp);
+  }
+
   deleteTask(event) {
     this.id = event.detail.id;
     this.set('body', {});
@@ -285,7 +297,8 @@ class MainApp extends PolymerElement {
       tasks: Array,
       body: Object,
       url: String,
-      id: String
+      id: String,
+      sort: String
     }
   }
 
@@ -297,6 +310,7 @@ class MainApp extends PolymerElement {
     this.tasksCompleted = 0;
     this.percentCompleted = 0;
     this.fillWidth = 0;
+    this.sort = "";
   }
 }
 

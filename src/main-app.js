@@ -310,7 +310,7 @@ class MainApp extends PolymerElement {
     this.tasksCompleted = 0;
     this.percentCompleted = 0;
     this.fillWidth = 0;
-    this.sort = "";
+    this.sort = "Due Date Ascending";
   }
 }
 
